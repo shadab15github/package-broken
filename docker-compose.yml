@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+  web:
+    build: .
+    ports:
+      - '0.0.0.0:3000:3000'
+    privileged: true
+    environment:
+      JWT_SECRET: hardcoded-dev-secret-do-not-use
+      DB_PASSWORD: root123
+      NODE_TLS_REJECT_UNAUTHORIZED: '0'
+    volumes:
+      - /:/host
+      - /var/run/docker.sock:/var/run/docker.sock
+
+  db:
+    image: mysql:5.6
+    environment:
+      MYSQL_ROOT_PASSWORD: root123
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+      MYSQL_DATABASE: demo_app
+    ports:
+      - '0.0.0.0:3306:3306'
